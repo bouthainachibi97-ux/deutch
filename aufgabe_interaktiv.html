@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>اختر إجابتك وشاهد النتيجة | Deutsch B1/B2</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: rgba(148, 163, 184, 0.22);
+      --primary: #0284c7;
+      --ok-bg: rgba(16, 185, 129, 0.16);
+      --ok-border: #10b981;
+      --ok-text: #a7f3d0;
+      --bad-bg: rgba(239, 68, 68, 0.16);
+      --bad-border: #ef4444;
+      --bad-text: #fecaca;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.7;
+      padding: 20px 14px 50px;
+    }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .score-box {
+      font-weight: 700;
+      color: #38bdf8;
+      font-size: 0.95rem;
+    }
+
+    .back-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      background: rgba(148, 163, 184, 0.14);
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
+    .question-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .q-meta {
+      font-size: 0.82rem;
+      color: #38bdf8;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .q-prompt {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .de-sentence {
+      direction: ltr;
+      text-align: left;
+      background: rgba(15, 23, 42, 0.85);
+      border-left: 4px solid #38bdf8;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      color: #f1f5f9;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .choice-btn {
+      direction: ltr;
+      text-align: left;
+      width: 100%;
+      background: #0f172a;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 15px;
+      font-size: 0.96rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+    }
+
+    .choice-btn:hover {
+      border-color: #38bdf8;
+      background: #17253b;
+    }
+
+    .choice-btn.selected-correct {
+      background: var(--ok-bg);
+      border-color: var(--ok-border);
+      color: var(--ok-text);
+      font-weight: 600;
+    }
+
+    .choice-btn.selected-wrong {
+      background: var(--bad-bg);
+      border-color: var(--bad-border);
+      color: var(--bad-text);
+    }
+
+    .result-box {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 0.94rem;
+    }
+
+    .result-box.ok {
+      display: block;
+      background: var(--ok-bg);
+      border: 1px solid var(--ok-border);
+      color: var(--ok-text);
+    }
+
+    .result-box.bad {
+      display: block;
+      background: var(--bad-bg);
+      border: 1px solid var(--bad-border);
+      color: var(--bad-text);
+    }
+
+    .retry-btn {
+      margin-top: 10px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(248, 250, 252, 0.35);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-bar">
+      <div class="score-box" id="scoreDisplay">الإجابات الصحيحة: 0 / 3</div>
+      <a href="index.html" class="back-link">← الرئيسية</a>
+    </div>
+
+    <!-- التمرين 1 -->
+    <section class="question-card" id="card-1">
+      <div class="q-meta">التمرين 1 • قواعد ومفردات (B1/B2)</div>
+      <div class="q-prompt">اختر الكلمة المناسبة لإكمال الجملة:</div>
+      <div class="de-sentence">
+        „Ich habe den Termin verschoben, ______ ich am Nachmittag einen Arzttermin hatte.“
+      </div>
+      <div class="choices">
+        <button class="choice-btn" onclick="pick(1, this, false, 'الرابط (obwohl) يفيد التناقض (رغم أن)، بينما الجملة هنا توضح السبب.')">
+          obwohl
+        </button>
+        <button class="choice-btn" onclick="pick(1, this, true, 'صحيح! (weil) يربط الجملة السببية ويأتي الفعل المصرف في نهاية الجملة الفرعية.')">
+          weil
+        </button>
+        <button class="choice-btn" onclick="pick(1, this, false, 'الرابط (trotzdem) ظرف مستقل ولا يربط جملة فرعية بالفعل في النهاية بهذا الشكل.')">
+          trotzdem
+        </button>
+      </div>
+      <div class="result-box" id="res-1"></div>
+    </section>
+
+    <!-- التمرين 2 -->
+    <section class="question-card" id="card-2">
+      <div class="q-meta">التمرين 2 • صيغة التهذيب (Konjunktiv II)</div>
+      <div class="q-prompt">كيف تطلب مساعدة أو توضيحاً بأسلوب مهذب في موقف رسمي؟</div>
+      <div class="choices">
+        <button class="choice-btn" onclick="pick(2, this, false, 'هذه الصيغة آمرة ومباشرة أكثر من اللازم في المواقف الرسمية.')">
+          Erklär mir das noch einmal schnell.
+        </button>
+        <button class="choice-btn" onclick="pick(2, this, true, 'ممتاز! (Könnten Sie ...?) صيغة مهذبة جداً ومناسبة للمحادثة والامتحان.')">
+          Könnten Sie mir diesen Punkt bitte noch einmal kurz erklären?
+        </button>
+        <button class="choice-btn" onclick="pick(2, this, false, 'الجملة ناقصة ولا تعبّر عن طلب مهذب واضح.')">
+          Ich will Erklärung für das.
+        </button>
+      </div>
+      <div class="result-box" id="res-2"></div>
+    </section>
+
+    <!-- التمرين 3 -->
+    <section class="question-card" id="card-3">
+      <div class="q-meta">التمرين 3 • التعبير عن الرأي (Sprechen B2)</div>
+      <div class="q-prompt">اختر العبارة الأنسب لطرح جانب إيجابي في نقاش:</div>
+      <div class="choices">
+        <button class="choice-btn" onclick="pick(3, this, true, 'أحسنتِ! هذه عبارة قوية ومنظمة لعرض الفوائد في نقاش مستوى B2.')">
+          Ein großer Vorteil dieser Lösung liegt darin, dass sie im Alltag flexibel einsetzbar ist.
+        </button>
+        <button class="choice-btn" onclick="pick(3, this, false, 'صياغة عامية غير دقيقة نحوياً (الاسم Vorteile بصيغة الجمع مع ein).')">
+          Das ist ein Vorteile für alle Leute.
+        </button>
+        <button class="choice-btn" onclick="pick(3, this, false, 'غير مكتملة ولا تقدم حجة واضحة.')">
+          Vielleicht gut, aber ich weiß nicht.
+        </button>
+      </div>
+      <div class="result-box" id="res-3"></div>
+    </section>
+  </div>
+
+  <script>
+    const answeredCorrectly = {};
+
+    function pick(qNum, btn, isCorrect, explanation) {
+      const card = document.getElementById(`card-${qNum}`);
+      const resBox = document.getElementById(`res-${qNum}`);
+
+      card.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected-correct', 'selected-wrong');
+      });
+
+      btn.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+
+      resBox.className = `result-box ${isCorrect ? 'ok' : 'bad'}`;
+      resBox.innerHTML = `
+        <div><strong>${isCorrect ? 'إجابة صحيحة ✓' : 'جرّب مرة أخرى ✕'}</strong> — ${explanation}</div>
+        <button class="retry-btn" onclick="resetQuestion(${qNum})">إعادة المحاولة</button>
+      `;
+
+      if (isCorrect) {
+        answeredCorrectly[qNum] = true;
+      } else {
+        delete answeredCorrectly[qNum];
+      }
+
+      updateScore();
+    }
+
+    function resetQuestion(qNum) {
+      const card = document.getElementById(`card-${qNum}`);
+      const resBox = document.getElementById(`res-${qNum}`);
+
+      card.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected-correct', 'selected-wrong');
+      });
+
+      resBox.className = 'result-box';
+      resBox.innerHTML = '';
+      delete answeredCorrectly[qNum];
+      updateScore();
+    }
+
+    function updateScore() {
+      const count = Object.keys(answeredCorrectly).length;
+      document.getElementById('scoreDisplay').textContent = `الإجابات الصحيحة: ${count} / 3`;
+    }
+  </script>
+</body>
+</html>
