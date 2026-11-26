@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة الحوارات التفاعلية لتعلم الألمانية | Deutsch Interaktiv</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: rgba(148, 163, 184, 0.2);
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent: #10b981;
+      --gold: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #172033 100%);
+      color: var(--text-main);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* رأس الصفحة */
+    header {
+      text-align: center;
+      padding: 48px 20px 32px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .badge-top {
+      display: inline-block;
+      background: rgba(2, 132, 199, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* أزرار التصفية حسب المستوى */
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 20px 30px;
+    }
+
+    .filter-btn {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      padding: 8px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* شبكة البطاقات */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .level-tag {
+      background: rgba(148, 163, 184, 0.15);
+      color: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      direction: ltr;
+    }
+
+    .status-free {
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .status-pro {
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .card .german-sub {
+      display: block;
+      direction: ltr;
+      text-align: right;
+      color: #38bdf8;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-link {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: background 0.2s ease;
+    }
+
+    .btn-free {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-free:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-pro {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-pro:hover {
+      background: rgba(245, 158, 11, 0.25);
+    }
+
+    /* قسم خاص للمعلمين */
+    .teachers-box {
+      margin-top: 50px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px dashed rgba(56, 189, 248, 0.4);
+      border-radius: 18px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .teachers-box h3 {
+      margin-bottom: 8px;
+      font-size: 1.25rem;
+    }
+
+    .teachers-box p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 16px;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge-top">تعلّم الألمانية بالممارسة واتخاذ القرار</span>
+    <h1>منصة السيناريوهات التفاعلية</h1>
+    <p>اختر موقفاً من الحياة اليومية أو امتحان المحادثة (Goethe / ÖSD)، تفاعل مع الحوار مباشرة من هاتفك، وشاهد نتيجة اختياراتك اللغوية فوراً.</p>
+  </header>
+
+  <!-- أزرار تصفية المستويات -->
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterCards('all', this)">جميع المستويات</button>
+    <button class="filter-btn" onclick="filterCards('A1-A2', this)">مبتدئ (A1 - A2)</button>
+    <button class="filter-btn" onclick="filterCards('B1-B2', this)">متوسط ومتقدم (B1 - B2)</button>
+  </div>
+
+  <main class="container">
+    <div class="grid" id="lessonsGrid">
+
+      <!-- البطاقة 1: مجانية -->
+      <article class="card" data-level="B1-B2">
+        <div>
+          <div class="card-header">
+            <span class="level-tag">B1 / B2</span>
+            <span class="status-free">● تجربة مجانية</span>
+          </div>
+          <h2>مقابلة عمل في شركة هندسية</h2>
+          <span class="german-sub">Das Vorstellungsgespräch</span>
+          <p>تدرّب على استخدام صيغة التهذيب (Konjunktiv II) والروابط السببية للإجابة باحترافية على أسئلة الموارد البشرية.</p>
+        </div>
+        <!-- ضعي اسم ملف Twine هنا -->
+        <a href="interview_b2.html" class="btn-link btn-free">ابدأ التجربة مجاناً ←</a>
+      </article>
+
+      <!-- البطاقة 2: مجانية -->
+      <article class="card" data-level="B1-B2">
+        <div>
+          <div class="card-header">
+            <span class="level-tag">B1 / B2</span>
+            <span class="status-free">● تجربة مجانية</span>
+          </div>
+          <h2>مناقشة التكنولوجيا والاستدامة</h2>
+          <span class="german-sub">Diskussion: Nachhaltigkeit & Technik</span>
+          <p>محاكاة لجزء المناقشة في امتحان Sprechen B1/B2 وتوظيف عبارات الحجاج (Einerseits... andererseits).</p>
+        </div>
+        <a href="diskussion_b2.html" class="btn-link btn-free">ابدأ التجربة مجاناً ←</a>
+      </article>
+
+      <!-- البطاقة 3: مدفوعة (باقة كاملة) -->
+      <article class="card" data-level="B1-B2">
+        <div>
+          <div class="card-header">
+            <span class="level-tag">B1 / B2 Bundle</span>
+            <span class="status-pro">★ الحزمة الكاملة (5 سيناريوهات)</span>
+          </div>
+          <h2>حقيبة اجتياز امتحان المحادثة</h2>
+          <span class="german-sub">Goethe & ÖSD Sprechen Simulator</span>
+          <p>5 سيناريوهات تفاعلية متشعبة + ملف PDF يضم أهم عبارات الحجاج والتصحيح النحوي الفوري لكل موقف.</p>
+        </div>
+        <!-- ضعي رابط Gumroad أو Payhip هنا -->
+        <a href="https://gumroad.com" target="_blank" class="btn-link btn-pro">احصل على الحزمة الكاملة</a>
+      </article>
+
+      <!-- البطاقة 4: مستوى مبتدئ -->
+      <article class="card" data-level="A1-A2">
+        <div>
+          <div class="card-header">
+            <span class="level-tag">A1 / A2</span>
+            <span class="status-free">● قريباً / مجاني</span>
+          </div>
+          <h2>حجز موعد في العيادة الطبية</h2>
+          <span class="german-sub">Beim Arzt & Terminvereinbarung</span>
+          <p>تعلّم كيف تصف الأعراض وتختار الموعد المناسب دون ارتباك في المحادثة الهاتفية أو الاستقبال.</p>
+        </div>
+        <a href="#" class="btn-link btn-free">جرّب الدرس ←</a>
+      </article>
+
+    </div>
+
+    <!-- قسم موجه للمعلمين -->
+    <section class="teachers-box">
+      <h3>هل أنت معلم لغة ألمانية أو صاحب مدرسة لغات؟</h3>
+      <p>حوّل دروسك النصية وملفات الـ PDF إلى حوارات تفاعلية وتمارين حركية تعمل على هواتف طلابك باسمك وشعار مدرستك.</p>
+      <a href="mailto:your-email@example.com" class="btn-link btn-free" style="max-width: 260px; margin: 0 auto;">اطلب نموذجاً لدرسك الآن</a>
+    </section>
+  </main>
+
+  <footer>
+    جميع الدروس تعمل مباشرة في المتصفح على الهاتف والحاسوب دون الحاجة لتثبيت أي تطبيق.
+  </footer>
+
+  <script>
+    function filterCards(level, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.card').forEach(card => {
+        if (level === 'all' || card.dataset.level === level) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
